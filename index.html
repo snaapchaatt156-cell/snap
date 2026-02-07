@@ -1,38 +1,38 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Mobile Video Gallery</title>
 
 <style>
 :root{
-  --bg:#0f0c29;
-  --bg2:#302b63;
-  --bg3:#24243e;
-  --accent:#ff4ecd;
-  --accent2:#00eaff;
+  --bg:#0b1020;
+  --card:#11172d;
+  --accent1:#ff0080;
+  --accent2:#7928ca;
+  --accent3:#2afadf;
 }
 
-*{box-sizing:border-box}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+
 body{
   margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto;
-  background:linear-gradient(135deg,var(--bg),var(--bg2),var(--bg3));
+  background:linear-gradient(160deg,var(--bg),#050713);
+  font-family:system-ui, -apple-system, sans-serif;
   color:#fff;
 }
 
 /* Header */
 header{
-  padding:14px 16px;
+  padding:14px;
   font-size:18px;
   font-weight:700;
   text-align:center;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  color:#000;
+  background:linear-gradient(90deg,var(--accent1),var(--accent2));
 }
 
-/* Grid */
+/* Gallery */
 #gallery{
   display:grid;
   grid-template-columns:repeat(2,1fr);
@@ -40,175 +40,178 @@ header{
   padding:12px;
 }
 
-/* Video tile */
-.video-tile{
+.card{
   position:relative;
   aspect-ratio:9/16;
   border-radius:16px;
   overflow:hidden;
   background:#000;
   transform:scale(1);
-  transition:transform .18s ease, box-shadow .18s ease;
-}
-.video-tile:active{
-  transform:scale(.96);
+  transition:transform .15s ease;
 }
 
-/* Thumbnail canvas */
-.video-tile canvas{
+.card:active{
+  transform:scale(.95);
+}
+
+.thumb{
   width:100%;
   height:100%;
   object-fit:cover;
 }
 
-/* Gradient overlay */
-.overlay{
-  position:absolute;
-  inset:0;
-  background:linear-gradient(to top,rgba(0,0,0,.75),transparent 60%);
-}
-
-/* Title */
-.title{
-  position:absolute;
-  bottom:10px;
-  left:10px;
-  right:10px;
-  font-size:13px;
-  font-weight:600;
-  text-shadow:0 2px 8px rgba(0,0,0,.6);
-}
-
-/* Play button */
+/* Play icon */
 .play{
   position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  width:56px;
-  height:56px;
-  border-radius:50%;
-  background:rgba(0,0,0,.65);
+  inset:0;
   display:flex;
   align-items:center;
   justify-content:center;
-  backdrop-filter:blur(6px);
+  background:linear-gradient(to top,rgba(0,0,0,.7),transparent);
 }
+
+.play span{
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--accent1),var(--accent3));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
 .play svg{
-  width:26px;
-  height:26px;
-  fill:white;
+  width:24px;
+  height:24px;
+  fill:#fff;
+  margin-left:2px;
 }
 
 /* Player */
 #player{
   position:fixed;
   inset:0;
-  background:black;
+  background:#000;
   display:none;
+  flex-direction:column;
   z-index:999;
 }
-#player video{
+
+#player.show{display:flex}
+
+.player-top{
+  padding:10px;
+  background:linear-gradient(90deg,var(--accent2),var(--accent1));
+}
+
+.back-btn{
+  background:rgba(0,0,0,.4);
+  border:none;
+  color:#fff;
+  padding:8px 14px;
+  border-radius:20px;
+  font-size:14px;
+}
+
+video{
   width:100%;
   height:100%;
   object-fit:contain;
-}
-#close{
-  position:absolute;
-  top:14px;
-  left:14px;
-  background:rgba(0,0,0,.6);
-  color:white;
-  border:none;
-  font-size:18px;
-  padding:6px 10px;
-  border-radius:10px;
 }
 </style>
 </head>
 
 <body>
 
-<header>📱 My Video Gallery</header>
+<header>Video Gallery</header>
 
-<div id="gallery"></div>
+<main id="gallery"></main>
 
-<!-- Fullscreen player -->
+<!-- Player -->
 <div id="player">
-  <button id="close">←</button>
-  <video id="playerVideo" controls playsinline></video>
+  <div class="player-top">
+    <button class="back-btn" onclick="closePlayer()">← Back</button>
+  </div>
+  <video id="video" controls playsinline></video>
 </div>
 
 <script>
-const videos = [
-  {file:"1.mp4", title:"Video 1"},
-  {file:"2.mp4", title:"Video 2"},
-  {file:"3.mp4", title:"Video 3"},
-  {file:"4.mp4", title:"Video 4"}
+const videos=[
+  {src:"1.mp4"},
+  {src:"2.mp4"},
+  {src:"3.mp4"},
+  {src:"4.mp4"}
 ];
 
-const gallery = document.getElementById("gallery");
-const player = document.getElementById("player");
-const playerVideo = document.getElementById("playerVideo");
-const closeBtn = document.getElementById("close");
+const gallery=document.getElementById("gallery");
+const player=document.getElementById("player");
+const videoEl=document.getElementById("video");
 
-/* Create tiles */
-videos.forEach(v=>{
-  const tile = document.createElement("div");
-  tile.className="video-tile";
-
-  const canvas = document.createElement("canvas");
-  tile.appendChild(canvas);
-
-  const overlay = document.createElement("div");
-  overlay.className="overlay";
-  tile.appendChild(overlay);
-
-  const play = document.createElement("div");
-  play.className="play";
-  play.innerHTML='<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
-  tile.appendChild(play);
-
-  const title = document.createElement("div");
-  title.className="title";
-  title.textContent=v.title;
-  tile.appendChild(title);
-
-  gallery.appendChild(tile);
-
-  generateThumbnail(v.file, canvas);
-
-  tile.addEventListener("click",()=>{
-    player.style.display="block";
-    playerVideo.src=v.file;
-    playerVideo.play();
+/* Create thumbnail from video */
+function createThumbnail(src,cb){
+  const v=document.createElement("video");
+  v.src=src;
+  v.muted=true;
+  v.playsInline=true;
+  v.addEventListener("loadeddata",()=>{
+    v.currentTime=0.5;
   });
-});
-
-/* Thumbnail from video */
-function generateThumbnail(src, canvas){
-  const video=document.createElement("video");
-  video.src=src;
-  video.muted=true;
-  video.playsInline=true;
-
-  video.addEventListener("loadeddata",()=>{
-    video.currentTime=1;
-  });
-
-  video.addEventListener("seeked",()=>{
-    canvas.width=video.videoWidth;
-    canvas.height=video.videoHeight;
-    const ctx=canvas.getContext("2d");
-    ctx.drawImage(video,0,0,canvas.width,canvas.height);
+  v.addEventListener("seeked",()=>{
+    const c=document.createElement("canvas");
+    c.width=v.videoWidth;
+    c.height=v.videoHeight;
+    c.getContext("2d").drawImage(v,0,0);
+    cb(c.toDataURL("image/jpeg"));
   });
 }
 
-/* Close player */
-closeBtn.onclick=()=>{
-  playerVideo.pause();
-  playerVideo.src="";
-  player.style.display="none";
+/* Build gallery */
+videos.forEach(v=>{
+  const card=document.createElement("div");
+  card.className="card";
+
+  const img=document.createElement("img");
+  img.className="thumb";
+  card.appendChild(img);
+
+  const play=document.createElement("div");
+  play.className="play";
+  play.innerHTML=`
+    <span>
+      <svg viewBox="0 0 24 24">
+        <path d="M8 5v14l11-7z"/>
+      </svg>
+    </span>`;
+  card.appendChild(play);
+
+  createThumbnail(v.src,(thumb)=>{
+    img.src=thumb;
+  });
+
+  card.onclick=()=>openPlayer(v.src);
+  gallery.appendChild(card);
+});
+
+/* Player controls */
+function openPlayer(src){
+  videoEl.src=src;
+  player.classList.add("show");
+  history.pushState({open:true},"");
+  videoEl.play();
+}
+
+function closePlayer(){
+  videoEl.pause();
+  videoEl.src="";
+  player.classList.remove("show");
+  history.back();
+}
+
+/* Android back button */
+window.onpopstate=()=>{
+  if(player.classList.contains("show")){
+    closePlayer();
+  }
 };
 </script>
 
