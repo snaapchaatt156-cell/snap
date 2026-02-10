@@ -2,217 +2,222 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Mobile Video Gallery</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adult Contents</title>
 
 <style>
-:root{
-  --bg:#0b1020;
-  --card:#11172d;
-  --accent1:#ff0080;
-  --accent2:#7928ca;
-  --accent3:#2afadf;
-}
+  :root {
+    --pink: #ff4fa3;
+    --pink-light: #ffd6e9;
+    --pink-dark: #c72574;
+    --bg: #fff4fa;
+  }
 
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  * {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
 
-body{
-  margin:0;
-  background:linear-gradient(160deg,var(--bg),#050713);
-  font-family:system-ui, -apple-system, sans-serif;
-  color:#fff;
-}
+  body {
+    margin: 0;
+    padding: 15px;
+    background: linear-gradient(135deg, var(--bg), var(--pink-light));
+    display: flex;
+    justify-content: center;
+  }
 
-/* Header */
-header{
-  padding:14px;
-  font-size:18px;
-  font-weight:700;
-  text-align:center;
-  background:linear-gradient(90deg,var(--accent1),var(--accent2));
-}
+  .app {
+    width: 100%;
+    max-width: 950px;
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 15px 35px rgba(255,79,163,0.3);
+    overflow: hidden;
+  }
 
-/* Gallery */
-#gallery{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-  padding:12px;
-}
+  header {
+    background: linear-gradient(135deg, var(--pink), var(--pink-dark));
+    color: white;
+    text-align: center;
+    padding: 18px;
+  }
 
-.card{
-  position:relative;
-  aspect-ratio:9/16;
-  border-radius:16px;
-  overflow:hidden;
-  background:#000;
-  transform:scale(1);
-  transition:transform .15s ease;
-}
+  header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+  }
 
-.card:active{
-  transform:scale(.95);
-}
+  header p {
+    margin-top: 6px;
+    font-size: 0.85rem;
+    opacity: 0.9;
+  }
 
-.thumb{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
+  .content {
+    padding: 20px;
+  }
 
-/* Play icon */
-.play{
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:linear-gradient(to top,rgba(0,0,0,.7),transparent);
-}
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+  }
 
-.play span{
-  width:56px;
-  height:56px;
-  border-radius:50%;
-  background:linear-gradient(135deg,var(--accent1),var(--accent3));
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
+  .video-card {
+    background: var(--bg);
+    border-radius: 14px;
+    padding: 12px;
+    text-align: center;
+    position: relative;
+  }
 
-.play svg{
-  width:24px;
-  height:24px;
-  fill:#fff;
-  margin-left:2px;
-}
+  .video-card label {
+    display: block;
+    background: var(--pink-light);
+    color: var(--pink-dark);
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
 
-/* Player */
-#player{
-  position:fixed;
-  inset:0;
-  background:#000;
-  display:none;
-  flex-direction:column;
-  z-index:999;
-}
+  .video-card input {
+    display: none;
+  }
 
-#player.show{display:flex}
+  .video-wrapper {
+    position: relative;
+  }
 
-.player-top{
-  padding:10px;
-  background:linear-gradient(90deg,var(--accent2),var(--accent1));
-}
+  video {
+    width: 100%;
+    border-radius: 12px;
+    background: black;
+    display: none;
+  }
 
-.back-btn{
-  background:rgba(0,0,0,.4);
-  border:none;
-  color:#fff;
-  padding:8px 14px;
-  border-radius:20px;
-  font-size:14px;
-}
+  .play-btn {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    color: white;
+    background: rgba(255,79,163,0.4);
+    border-radius: 12px;
+    cursor: pointer;
+    display: none;
+  }
 
-video{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-}
+  footer {
+    text-align: center;
+    padding: 12px;
+    font-size: 0.75rem;
+    color: #777;
+  }
 </style>
 </head>
 
 <body>
 
-<header>Video Gallery</header>
+<div class="app">
+  <header>
+    <h1>🌸Adult Contents🌸</title>
+</h1>
+    <p>Paused by Default • Smooth Playback</p>
+  </header>
 
-<main id="gallery"></main>
+  <div class="content">
+    <div class="video-grid">
 
-<!-- Player -->
-<div id="player">
-  <div class="player-top">
-    <button class="back-btn" onclick="closePlayer()">← Back</button>
+      <!-- Repeat for 5 videos -->
+      <div class="video-card">
+        <label>
+          Add Video 1
+          <input type="file" accept="video/*" onchange="loadVideo(this, 1)">
+        </label>
+        <div class="video-wrapper">
+          <video id="video1" controls playsinline></video>
+          <div class="play-btn" onclick="togglePlay(1)">▶</div>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <label>
+          Add Video 2
+          <input type="file" accept="video/*" onchange="loadVideo(this, 2)">
+        </label>
+        <div class="video-wrapper">
+          <video id="video2" controls playsinline></video>
+          <div class="play-btn" onclick="togglePlay(2)">▶</div>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <label>
+          Add Video 3
+          <input type="file" accept="video/*" onchange="loadVideo(this, 3)">
+        </label>
+        <div class="video-wrapper">
+          <video id="video3" controls playsinline></video>
+          <div class="play-btn" onclick="togglePlay(3)">▶</div>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <label>
+          Add Video 4
+          <input type="file" accept="video/*" onchange="loadVideo(this, 4)">
+        </label>
+        <div class="video-wrapper">
+          <video id="video4" controls playsinline></video>
+          <div class="play-btn" onclick="togglePlay(4)">▶</div>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <label>
+          Add Video 5
+          <input type="file" accept="video/*" onchange="loadVideo(this, 5)">
+        </label>
+        <div class="video-wrapper">
+          <video id="video5" controls playsinline></video>
+          <div class="play-btn" onclick="togglePlay(5)">▶</div>
+        </div>
+      </div>
+
+    </div>
   </div>
-  <video id="video" controls playsinline></video>
+
+  <footer>
+    Default Pause Enabled • Android Friendly • Pink UI 💗
+  </footer>
 </div>
 
 <script>
-const videos=[
-  {src:"1.mp4"},
-  {src:"2.mp4"},
-  {src:"3.mp4"},
-  {src:"4.mp4"}
-];
+  function loadVideo(input, index) {
+    const file = input.files[0];
+    if (!file) return;
 
-const gallery=document.getElementById("gallery");
-const player=document.getElementById("player");
-const videoEl=document.getElementById("video");
+    const video = document.getElementById(`video${index}`);
+    const playBtn = video.nextElementSibling;
 
-/* Create thumbnail from video */
-function createThumbnail(src,cb){
-  const v=document.createElement("video");
-  v.src=src;
-  v.muted=true;
-  v.playsInline=true;
-  v.addEventListener("loadeddata",()=>{
-    v.currentTime=0.5;
-  });
-  v.addEventListener("seeked",()=>{
-    const c=document.createElement("canvas");
-    c.width=v.videoWidth;
-    c.height=v.videoHeight;
-    c.getContext("2d").drawImage(v,0,0);
-    cb(c.toDataURL("image/jpeg"));
-  });
-}
+    video.src = URL.createObjectURL(file);
+    video.style.display = "block";
+    playBtn.style.display = "flex";
 
-/* Build gallery */
-videos.forEach(v=>{
-  const card=document.createElement("div");
-  card.className="card";
+    video.pause(); // ✅ paused by default
 
-  const img=document.createElement("img");
-  img.className="thumb";
-  card.appendChild(img);
-
-  const play=document.createElement("div");
-  play.className="play";
-  play.innerHTML=`
-    <span>
-      <svg viewBox="0 0 24 24">
-        <path d="M8 5v14l11-7z"/>
-      </svg>
-    </span>`;
-  card.appendChild(play);
-
-  createThumbnail(v.src,(thumb)=>{
-    img.src=thumb;
-  });
-
-  card.onclick=()=>openPlayer(v.src);
-  gallery.appendChild(card);
-});
-
-/* Player controls */
-function openPlayer(src){
-  videoEl.src=src;
-  player.classList.add("show");
-  history.pushState({open:true},"");
-  videoEl.play();
-}
-
-function closePlayer(){
-  videoEl.pause();
-  videoEl.src="";
-  player.classList.remove("show");
-  history.back();
-}
-
-/* Android back button */
-window.onpopstate=()=>{
-  if(player.classList.contains("show")){
-    closePlayer();
+    video.onplay = () => playBtn.style.display = "none";
+    video.onpause = () => playBtn.style.display = "flex";
   }
-};
+
+  function togglePlay(index) {
+    const video = document.getElementById(`video${index}`);
+    video.play();
+  }
 </script>
 
 </body>
