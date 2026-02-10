@@ -376,11 +376,15 @@
     const videos = document.querySelectorAll('.video-player');
 
     videos.forEach(video => {
+
+        // Ensure video does NOT preload anything
+        video.preload = 'none';
+
+        // Pause other videos when one starts playing
         video.addEventListener('play', () => {
 
-            // Pause all other videos
             videos.forEach(v => {
-                if (v !== video) {
+                if (v !== video && !v.paused) {
                     v.pause();
                 }
             });
@@ -390,16 +394,22 @@
             const newUrl = `${window.location.pathname}?video=${videoId}`;
             window.history.pushState({ video: videoId }, '', newUrl);
         });
+
+        // Optional: stop buffering when paused (saves mobile data)
+        video.addEventListener('pause', () => {
+            video.preload = 'none';
+        });
     });
 
-    // Auto-play video if opened from history
+    // Scroll to video when opened from history (NO autoplay)
     window.addEventListener('load', () => {
         const params = new URLSearchParams(window.location.search);
         const videoId = params.get('video');
+
         if (videoId) {
             const targetVideo = document.getElementById(videoId);
             if (targetVideo) {
-                targetVideo.scrollIntoView({ behavior: 'smooth' });
+                targetVideo.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         }
     });
@@ -407,6 +417,7 @@
 
 </body>
 </html>
+
 
 
 
