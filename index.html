@@ -102,16 +102,25 @@
     <div class="video-grid">
        <div class="video-card">
         <div class="video-title">VID1-202-5878186-9</div>
-        <video class="video-player" controls playsinline preload="metadata">
-          <source src="1.mp4" type="video/mp4">
-        </video>
+        <video
+              class="video-player"
+              controls
+              playsinline
+              src="1.mp4"
+              data-id="VID1-202-5878186-9">
+       </video>
+
       </div>
 
       <div class="video-card">
         <div class="video-title">VID-2020115-WA00156</div>
-        <video class="video-player" controls playsinline preload="metadata">
-          <source src="VID-2020115-WA00156.mp4" type="video/mp4">
-        </video>
+        <video
+              class="video-player"
+              controls
+              playsinline
+              src="VID-2020115-WA00156.mp4"
+              data-id="VID-2020115-WA00156">
+       </video>
       </div>
       <div class="video-card">
         <div class="video-title">VID2-202-5878186-9</div>
@@ -379,18 +388,38 @@
 <script>
   const videos = document.querySelectorAll(".video-player");
 
-  videos.forEach((video) => {
+  videos.forEach(video => {
+    const id = video.dataset.id;
+
+    // Restore last position
+    const savedTime = localStorage.getItem("video_" + id);
+    if (savedTime) {
+      video.currentTime = parseFloat(savedTime);
+    }
+
+    // When one video plays, pause all others
     video.addEventListener("play", () => {
-      videos.forEach((otherVideo) => {
-        if (otherVideo !== video) {
-          otherVideo.pause();
-          otherVideo.currentTime = 0; // optional: reset others
+      videos.forEach(other => {
+        if (other !== video) {
+          other.pause();
         }
       });
+    });
+
+    // Save progress while playing
+    video.addEventListener("timeupdate", () => {
+      localStorage.setItem("video_" + id, video.currentTime);
+    });
+
+    // Mark video as fully played
+    video.addEventListener("ended", () => {
+      localStorage.setItem("video_" + id + "_played", "true");
     });
   });
 </script>
 
+
 </body>
 </html>
+
 
