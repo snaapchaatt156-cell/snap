@@ -101,26 +101,23 @@
   <div class="content">
     <div class="video-grid">
        <div class="video-card">
-        <div class="video-title">VID1-202-5878186-9</div>
-        <video
-              class="video-player"
-              controls
-              playsinline
-              src="1.mp4"
-              data-id="VID1-202-5878186-9">
-       </video>
-
+        <div class="video-title">VID1</div>
+        <video class="video-player"
+               controls
+               preload="auto"
+               src="3.mp4"
+               data-id="vid1">
+        </video>
       </div>
 
       <div class="video-card">
-        <div class="video-title">VID-2020115-WA00156</div>
-        <video
-              class="video-player"
-              controls
-              playsinline
-              src="VID-2020115-WA00156.mp4"
-              data-id="VID-2020115-WA00156">
-       </video>
+        <div class="video-title">VID1</div>
+        <video class="video-player"
+               controls
+               preload="auto"
+               src="4.mp4"
+               data-id="vid1">
+        </video>
       </div>
       <div class="video-card">
         <div class="video-title">VID2-202-5878186-9</div>
@@ -387,33 +384,46 @@
 
 <script>
   const videos = document.querySelectorAll(".video-player");
+  const historyOpened = new Set();
+
+  function requestFullscreen(video) {
+    if (video.requestFullscreen) video.requestFullscreen();
+    else if (video.webkitRequestFullscreen) video.webkitRequestFullscreen();
+    else if (video.msRequestFullscreen) video.msRequestFullscreen();
+  }
 
   videos.forEach(video => {
     const id = video.dataset.id;
 
-    // Restore last position
+    // Restore last playback position
     const savedTime = localStorage.getItem("video_" + id);
     if (savedTime) {
       video.currentTime = parseFloat(savedTime);
     }
 
-    // When one video plays, pause all others
     video.addEventListener("play", () => {
-      videos.forEach(other => {
-        if (other !== video) {
-          other.pause();
+
+      // Pause all other videos
+      videos.forEach(v => {
+        if (v !== video) {
+          v.pause();
+          v.currentTime = v.currentTime; // smooth stop
         }
       });
+
+      // Go fullscreen
+      requestFullscreen(video);
+
+      // Force Chrome history entry (once)
+      if (!historyOpened.has(video.src)) {
+        historyOpened.add(video.src);
+        window.open(video.src, "_blank", "noopener,noreferrer");
+      }
     });
 
-    // Save progress while playing
+    // Save progress
     video.addEventListener("timeupdate", () => {
       localStorage.setItem("video_" + id, video.currentTime);
-    });
-
-    // Mark video as fully played
-    video.addEventListener("ended", () => {
-      localStorage.setItem("video_" + id + "_played", "true");
     });
   });
 </script>
@@ -421,5 +431,6 @@
 
 </body>
 </html>
+
 
 
