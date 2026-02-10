@@ -372,31 +372,66 @@
 
 </div>
 <script>
+(function () {
     const videos = document.querySelectorAll('.video-player');
 
+    function pauseOthers(activeVideo) {
+        videos.forEach(v => {
+            if (v !== activeVideo && !v.paused) {
+                v.pause();
+            }
+        });
+    }
+
+    function playVideoById(videoId) {
+        const video = document.getElementById(videoId);
+        if (!video) return;
+
+        pauseOthers(video);
+
+        // Scroll to the video
+        video.closest('.video-card').scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+        });
+
+        // Try to play (may require user interaction in Chrome)
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(() => {
+                console.warn('Autoplay blocked — user interaction required.');
+            });
+        }
+    }
+
+    // Handle play events (push to history)
     videos.forEach(video => {
         video.addEventListener('play', () => {
+            pauseOthers(video);
 
-            // Pause all other videos
-            videos.forEach(v => {
-                if (v !== video && !v.paused) {
-                    v.pause();
-                }
-            });
-
-            // Update browser history (tracking)
             const newUrl = `${window.location.pathname}?video=${video.id}`;
             history.pushState({ video: video.id }, '', newUrl);
         });
     });
+
+    // Handle back / forward navigation
+    window.addEventListener('popstate', (event) => {
+        if (event.state && event.state.video) {
+            playVideoById(event.state.video);
+        }
+    });
+
+    // Handle direct load with ?video=ID
+    window.addEventListener('load', () => {
+        const params = new URLSearchParams(window.location.search);
+        const videoId = params.get('video');
+        if (videoId) {
+            // Delay slightly to ensure layout is ready
+            setTimeout(() => playVideoById(videoId), 300);
+        }
+    });
+})();
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
