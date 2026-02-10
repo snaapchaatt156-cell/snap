@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Adult Contents</title>
 
 <style>
@@ -20,7 +20,7 @@
 
   body {
     margin: 0;
-    padding: 15px;
+    padding: 16px;
     background: linear-gradient(135deg, var(--bg), var(--pink-light));
     display: flex;
     justify-content: center;
@@ -28,10 +28,10 @@
 
   .app {
     width: 100%;
-    max-width: 950px;
+    max-width: 1000px;
     background: white;
     border-radius: 18px;
-    box-shadow: 0 15px 35px rgba(255,79,163,0.3);
+    box-shadow: 0 18px 40px rgba(255, 79, 163, 0.3);
     overflow: hidden;
   }
 
@@ -39,12 +39,12 @@
     background: linear-gradient(135deg, var(--pink), var(--pink-dark));
     color: white;
     text-align: center;
-    padding: 18px;
+    padding: 20px;
   }
 
   header h1 {
     margin: 0;
-    font-size: 1.8rem;
+    font-size: 1.9rem;
   }
 
   header p {
@@ -59,56 +59,27 @@
 
   .video-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
   }
 
   .video-card {
     background: var(--bg);
     border-radius: 14px;
     padding: 12px;
+  }
+
+  .video-title {
     text-align: center;
-    position: relative;
-  }
-
-  .video-card label {
-    display: block;
-    background: var(--pink-light);
-    color: var(--pink-dark);
-    padding: 10px;
-    border-radius: 10px;
-    cursor: pointer;
     font-weight: bold;
+    color: var(--pink-dark);
     margin-bottom: 8px;
-  }
-
-  .video-card input {
-    display: none;
-  }
-
-  .video-wrapper {
-    position: relative;
   }
 
   video {
     width: 100%;
     border-radius: 12px;
     background: black;
-    display: none;
-  }
-
-  .play-btn {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 50px;
-    color: white;
-    background: rgba(255,79,163,0.4);
-    border-radius: 12px;
-    cursor: pointer;
-    display: none;
   }
 
   footer {
@@ -124,100 +95,299 @@
 
 <div class="app">
   <header>
-    <h1>🌸Adult Contents🌸</title>
-</h1>
-    <p>Paused by Default • Smooth Playback</p>
+    <h1>🌸Adult Contents🌸</h1>
   </header>
 
   <div class="content">
     <div class="video-grid">
 
-      <!-- Repeat for 5 videos -->
       <div class="video-card">
-        <label>
-          Add Video 1
-          <input type="file" accept="video/*" onchange="loadVideo(this, 1)">
-        </label>
-        <div class="video-wrapper">
-          <video id="video1" controls playsinline></video>
-          <div class="play-btn" onclick="togglePlay(1)">▶</div>
-        </div>
+        <div class="video-title">VID-2020115-WA00156</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="VID-2020115-WA00156.mp4" type="video/mp4">
+        </video>
       </div>
 
       <div class="video-card">
-        <label>
-          Add Video 2
-          <input type="file" accept="video/*" onchange="loadVideo(this, 2)">
-        </label>
-        <div class="video-wrapper">
-          <video id="video2" controls playsinline></video>
-          <div class="play-btn" onclick="togglePlay(2)">▶</div>
-        </div>
+        <div class="video-title">VID-2020115-WA00154</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="VID-2020115-WA00154.mp4" type="video/mp4">
+        </video>
       </div>
 
       <div class="video-card">
-        <label>
-          Add Video 3
-          <input type="file" accept="video/*" onchange="loadVideo(this, 3)">
-        </label>
-        <div class="video-wrapper">
-          <video id="video3" controls playsinline></video>
-          <div class="play-btn" onclick="togglePlay(3)">▶</div>
-        </div>
+        <div class="video-title">VID-2020115-WA001515</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="VID-2020115-WA001515.mp4" type="video/mp4">
+        </video>
       </div>
 
       <div class="video-card">
-        <label>
-          Add Video 4
-          <input type="file" accept="video/*" onchange="loadVideo(this, 4)">
-        </label>
-        <div class="video-wrapper">
-          <video id="video4" controls playsinline></video>
-          <div class="play-btn" onclick="togglePlay(4)">▶</div>
-        </div>
+        <div class="video-title">VID-2020115-WA00153</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="VID-2020115-WA00153.mp4" type="video/mp4">
+        </video>
       </div>
 
       <div class="video-card">
-        <label>
-          Add Video 5
-          <input type="file" accept="video/*" onchange="loadVideo(this, 5)">
-        </label>
-        <div class="video-wrapper">
-          <video id="video5" controls playsinline></video>
-          <div class="play-btn" onclick="togglePlay(5)">▶</div>
-        </div>
+        <div class="video-title">VID-2020115-WA001510</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="VID-2020115-WA001510.mp4" type="video/mp4">
+        </video>
       </div>
+      <div class="video-card">
+        <div class="video-title">VID-2020115-WA00155</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="VID-2020115-WA00155.mp4" type="video/mp4">
+        </video>
+      </div>
+       <div class="video-card">
+        <div class="video-title">VID-2020115-WA00151</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="VID-2020115-WA00151.mp4" type="video/mp4">
+        </video>
+      </div>
+       <div class="video-card">
+        <div class="video-title">VID-2020115-WA001511</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="VID-2020115-WA001511.mp4" type="video/mp4">
+        </video>
+      </div>
+       <div class="video-card">
+        <div class="video-title">VID-2020115-WA001513</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="VID-2020115-WA001513.mp4" type="video/mp4">
+        </video>
+      </div>
+       <div class="video-card">
+        <div class="video-title">VID-2020115-WA0015</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="VID-2020115-WA0015.mp4" type="video/mp4">
+        </video>
+      </div>
+       <div class="video-card">
+        <div class="video-title">VID-2020115-WA00157</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="VID-2020115-WA00157.mp4" type="video/mp4">
+        </video>
+      </div>
+       <div class="video-card">
+        <div class="video-title">VID-2020115-WA001514</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="VID-2020115-WA001514.mp4" type="video/mp4">
+        </video>
+      </div>
+       <div class="video-card">
+        <div class="video-title">VID-2020115-WA00158</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="VID-2020115-WA00158.mp4" type="video/mp4">
+        </video>
+      </div>
+       <div class="video-card">
+        <div class="video-title">VID-2020115-WA00152</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="VID-2020115-WA00152.mp4" type="video/mp4">
+        </video>
+      </div>
+       <div class="video-card">
+        <div class="video-title">VID-2020115-WA00159</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="VID-2020115-WA00159.mp4" type="video/mp4">
+        </video>
+      </div>
+       <div class="video-card">
+        <div class="video-title">VID-2020115-WA001512</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="VID-2020115-WA001512.mp4" type="video/mp4">
+        </video>
+      </div>
+       <div class="video-card">
+        <div class="video-title">VID-20251229-WA0038</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="VID-20251229-WA0038.mp4" type="video/mp4">
+        </video>
+      </div>
+       <div class="video-card">
+        <div class="video-title">VID-20260131-WA0006</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="VID-20260131-WA0006.mp4" type="video/mp4">
+        </video>
+      </div>
+       <div class="video-card">
+        <div class="video-title">VID-20251212-WA0036</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="VID-20251212-WA0036.mp4" type="video/mp4">
+        </video>
+      </div>
+       <div class="video-card">
+        <div class="video-title">VID-20251209-WA0038</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="VID-20251209-WA0038.mp4" type="video/mp4">
+        </video>
+      </div>
+       <div class="video-card">
+        <div class="video-title">VID-20251122-WA0137</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="VID-20251122-WA0137.mp4" type="video/mp4">
+        </video>
+      </div>
+       <div class="video-card">
+        <div class="video-title">VID-20251122-WA0126</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="VID-20251122-WA0126.mp4" type="video/mp4">
+        </video>
+      </div>
+       <div class="video-card">
+        <div class="video-title">VID-20251122-WA0131</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="VID-20251122-WA0131.mp4" type="video/mp4">
+        </video>
+      </div>
+       <div class="video-card">
+        <div class="video-title">VID-20-02-_01-16-58</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="VID-20-02-_01-16-58.mp4" type="video/mp4">
+        </video>
+      </div>
+       <div class="video-card">
+        <div class="video-title">VID-202-5878186-9</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="VID-202-5878186-9.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-card">
+        <div class="video-title">VID1-202-5878186-9</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="1.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-card">
+        <div class="video-title">VID2-202-5878186-9</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="2.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-card">
+        <div class="video-title">VID3-202-5878186-9</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="3.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-card">
+        <div class="video-title">VID4-202-5878186-9</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="4.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-card">
+        <div class="video-title">VID5-202-5878186-9</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="5.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-card">
+        <div class="video-title">VID6-202-5878186-9</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="6.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-card">
+        <div class="video-title">VID7-202-5878186-9</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src=7.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-card">
+        <div class="video-title">VID8-202-5878186-9</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="8.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-card">
+        <div class="video-title">VID9-202-5878186-9</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="9.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-card">
+        <div class="video-title">VID10-202-5878186-9</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="10.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-card">
+        <div class="video-title">VID11-202-5878186-9</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="11.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-card">
+        <div class="video-title">VID12-202-5878186-9</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="12.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-card">
+        <div class="video-title">VID13-202-5878186-9</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="13.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-card">
+        <div class="video-title">VID14-202-5878186-9</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="14.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-card">
+        <div class="video-title">VID15-202-5878186-9</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="15.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-card">
+        <div class="video-title">VID16-202-5878186-9</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="16.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-card">
+        <div class="video-title">VID17-202-5878186-9</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="17.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-card">
+        <div class="video-title">VID18-202-5878186-9</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="18.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-card">
+        <div class="video-title">VID19-202-5878186-9</div>
+        <video class="video-player" controls playsinline preload="metadata">
+          <source src="Extremely Sensual Tits Sucking with Happy End - CLOSE UP BOOBS LICKING_428x240.mp4" type="video/mp4">
+        </video>
+      </div>
+
 
     </div>
   </div>
-
-  <footer>
-    Default Pause Enabled • Android Friendly • Pink UI 💗
-  </footer>
 </div>
 
 <script>
-  function loadVideo(input, index) {
-    const file = input.files[0];
-    if (!file) return;
+  const videos = document.querySelectorAll(".video-player");
 
-    const video = document.getElementById(`video${index}`);
-    const playBtn = video.nextElementSibling;
-
-    video.src = URL.createObjectURL(file);
-    video.style.display = "block";
-    playBtn.style.display = "flex";
-
-    video.pause(); // ✅ paused by default
-
-    video.onplay = () => playBtn.style.display = "none";
-    video.onpause = () => playBtn.style.display = "flex";
-  }
-
-  function togglePlay(index) {
-    const video = document.getElementById(`video${index}`);
-    video.play();
-  }
+  videos.forEach((video) => {
+    video.addEventListener("play", () => {
+      videos.forEach((otherVideo) => {
+        if (otherVideo !== video) {
+          otherVideo.pause();
+          otherVideo.currentTime = 0; // optional: reset others
+        }
+      });
+    });
+  });
 </script>
 
 </body>
